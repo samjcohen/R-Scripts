@@ -1,0 +1,70 @@
+#Lab Report 5
+#Summary Data
+#Sam Cohen
+#FOR 131
+install.packages("tidyverse")
+
+library (readxl)
+  malel <- read_excel(file.choose())
+  View(malel)
+
+#include na.omit if there are empty cells
+
+slope <- na.omit(malel$SLOP) #LL=0, SS=1, MS=2, STS=3
+  mean(slope)
+  sd(slope)
+  median(slope)
+  boxplot(slope)
+
+litt <- (malel$LITT)
+  mean(litt)
+  sd(litt)
+  median(litt)
+  boxplot(litt)
+
+soil <- (malel$SOIL)
+  mean(soil)
+  sd(soil)
+  median(soil)
+  boxplot(soil)
+
+plot(litt~slope, xlab="Slope Steepness", ylab="Litter Depth (cm)",
+  pch=16,main="Figure 1B: Effect of Slope on Litter Depth")
+  model1 <- lm(litt~slope)
+  abline(model1)
+  
+plot(soil~slope, xlab="Slope Steepness", ylab="Soil Depth (cm)",
+  pch=16, main="Figure 1A: Effect of Slope on Soil Depth")
+  model2 <- lm(soil~slope)
+  abline(model2)
+
+boxplot(litt~slope, xlab="Slope Steepness", ylab="Litter Depth (cm)", pch=16)
+  var.test(litt,slope)
+  t.test(litt,slope)
+
+boxplot(soil~slope, xlab="Slope Steepness", ylab="Soil Depth (cm)", pch=16)
+  var.test(soil,slope)
+  t.test(soil,slope)
+    
+#Combined litter & Soil Depth Graph
+plot(soil~slope, xlab="Slope Steepness", ylab="Soil/Litter Depth (cm)", pch=16, col="Green")
+  model2 <- lm(soil~slope)
+  abline(model2, col="Green")
+  points(slope,litt, pch=16, col="Purple")
+  abline(model1, col="Purple")
+  
+################################
+  
+plot(litt~soil)
+  model3 <- lm(litt~soil)
+  abline(model3)
+  boxplot(litt,soil)
+  var.test(litt,soil)
+  t.test(litt,soil)
+  
+plot(soil~litt)
+  model4 <- lm(soil~litt)
+  abline(model4)
+  boxplot(soil,litt)
+  var.test(soil,litt)
+  t.test(soil,litt)
